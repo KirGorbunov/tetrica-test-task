@@ -3,9 +3,8 @@ def strict(func):
         annotation_types = list(func.__annotations__.values())
         vars_list = list(args)
         for i in range(len(args)):
-            print(i, type(vars_list[i]), annotation_types[i])
             if type(vars_list[i]) is not annotation_types[i]:
-                raise TypeError
+                raise TypeError(f"Аргумент {i+1} имеет тип {type(vars_list[i])}, а ожидается {annotation_types[i]}")
         result = func(*args, **kwargs)
         return result
     return wrapper
