@@ -1,10 +1,12 @@
+from inspect import get_annotations
+
+
 def strict(func):
     def wrapper(*args, **kwargs):
-        annotations = func.__annotations__
-        annotations_types = list(annotations.values())
+        annotations = get_annotations(func)
         args_list = list(args)
         for i in range(len(args_list)):
-            if type(args_list[i]) is not annotations_types[i]:
+            if type(args_list[i]) is not list(annotations.values())[i]:
                 raise TypeError(f"Аргумент {i+1} имеет тип {type(args_list[i])}, что не соответствует аннотации")
         for j in kwargs:
             if type(kwargs[j]) is not annotations[j]:
